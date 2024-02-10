@@ -10,9 +10,14 @@ function setup() {
 
 	balls = new Group();
 
-	floor = new Sprite(x = 300, y = 400, w = 600, h = 10, collider = 's');
+	boundaries = new Group;
 
-	new_ball_diam = 10;
+	floor   = new boundaries.Sprite(x = 300, y = 400, w = 600, h = 10,  collider = 's');
+	l_wall  = new boundaries.Sprite(x = 0,   y = 200, w = 10,  h = 400, collider = 's');
+	r_wall  = new boundaries.Sprite(x = 600, y = 200, w = 10,  h = 400, collider = 's');
+	ceiling = new boundaries.Sprite(x = 300, y = 0,   w = 600,  h = 10, collider = 's');
+
+	new_ball_diam = 1;
 
 }
 
