@@ -6,10 +6,10 @@ let boundaries, floor, l_wall, r_wall, ceiling // screen boundaries
 function setup() {
 	new Canvas(600, 400);
 
+	// Setup world
 	world.gravity.y = 10;
 
-	balls = new Group();
-
+	// Define boundaries for game world
 	boundaries = new Group;
 
 	floor   = new boundaries.Sprite(x = 300, y = 400, w = 600, h = 10,  collider = 's');
@@ -17,6 +17,8 @@ function setup() {
 	r_wall  = new boundaries.Sprite(x = 600, y = 200, w = 10,  h = 400, collider = 's');
 	ceiling = new boundaries.Sprite(x = 300, y = 0,   w = 600,  h = 10, collider = 's');
 
+	// Initialise balls
+	balls = new Group();
 	new_ball_diam = 1;
 
 }
@@ -36,6 +38,7 @@ function draw() {
 function mouseReleased() {
 	ball = new balls.Sprite(new_ball.x, new_ball.y, w = new_ball.w);
 	new_ball.remove();
+	adding_ball = false;
 }
 
 
