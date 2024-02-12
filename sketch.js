@@ -1,14 +1,15 @@
 
 // Global variables
 let balls; // All balls already dropped
-let balls_left;
+let balls_left; // How many balls we have left to play with
 let new_ball, new_ball_diam, adding_ball; // Ball currently being dropped	
 let boundaries, floor, l_wall, r_wall, ceiling; // screen boundaries
-let baddies;
+let baddies, num_baddies, baddie_force;
+// Sounds
 let inflate_sound, pop_sound, add_ball_sound, level_up_sound;
-let level;
-let screen_area;
-
+// Game state 
+let level, screen_area, balls_area, target, game_over;
+// Colours
 let baddie_colour, ball_colour, background_colour, text_colour, progress_colour, adding_ball_colour, target_colour, progress_background_colour;
 
 function preload() {
@@ -22,7 +23,16 @@ function setup() {
 	new Canvas(600, 400);
 
 	// Setup world
-	//screen_area = canvas.w * canvas.h;
+
+	// Intitialise game state
+	screen_area = width * height;
+	balls_left = 100;
+	game_over - false;
+	balls_area = 0;
+	target = 0.5;
+
+
+	// Colors
 	baddie_colour = color(204, 51, 63);
 	ball_colour = color(0, 160, 176);
 	background_colour = color(106, 74, 60);
@@ -30,7 +40,7 @@ function setup() {
 	progress_colour = color(0, 160, 176);
 	adding_ball_colour = color(204, 51, 63);
 	target_colour = color(237, 201, 81);
-	progress_background_olour = color(235, 104, 65);
+	progress_background_colour = color(235, 104, 65);
 
 	// Define boundaries for game world
 	boundaries = new Group;
@@ -44,9 +54,10 @@ function setup() {
 	balls = new Group();
 	balls.color = ball_colour;
 	new_ball_diam = 1;
-	balls_left = 100;
+
 
 	// Initialise baddies
+	num_baddies = 1;
 	baddies = new Group();
 	baddies.color = baddie_colour;
 	baddy = new baddies.Sprite(300, 200, 10, 10, collider = 'd');
@@ -100,6 +111,7 @@ function draw() {
 	balls.draw();
 	displayLives();
 	displayLevel();
+	displayProgressBar();
 
 
 }
@@ -113,13 +125,14 @@ function mouseReleased() {
 
 function mousePressed() {
 	adding_ball = true;
-	new_ball = new Sprite(mouseX, mouseY, new_ball_diam, collider = 's');
+	new_ball = new Sprite(mouseX, mouseY, w = new_ball_diam, collider = 's');
 	new_ball.color = ball_colour;
 	inflate_sound.play();
 }
 
 function addBall() {
 	ball = new balls.Sprite(new_ball.x, new_ball.y, w = new_ball.w);
+	balls_area += pow(new_ball.w / 2, 2) * PI;
 	new_ball.remove();
 	adding_ball = false;
 	inflate_sound.stop();
@@ -144,4 +157,26 @@ function displayLevel() {
 	text(level, 20, height - 20);
 	textSize(12);
 	text("Level", 20, height - 50);
+  }
+
+
+function displayProgressBar() {
+	let indentation = 20;
+	let girth = 20;
+	stroke(0);
+	rectMode(CORNER);
+	fill(progress_background_colour);
+	rect(indentation, indentation, width - 2 * indentation, girth);
+	fill(target_colour);
+	rect(indentation, indentation, (width - 2 * indentation) * target, girth);
+	fill(progress_colour);
+	rect(indentation, indentation, (width - 2 * indentation) * (balls_area/screen_area), girth);
+	if (adding_ball) {
+	  fill(adding_ball_colour);
+	  rect(indentation + (width - 2 * indentation) * (balls_area/screen_area), indentation, (width - 2 * indentation) * ((PI * pow(new_ball.w / 2, 2))/screen_area), girth);
+	}
+	fill(text_colour);
+	textSize(10);
+	textAlign(CENTER);
+	text("Target", indentation + (width - 2 * indentation) * target, 18);
   }
