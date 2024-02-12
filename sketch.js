@@ -1,11 +1,19 @@
 
 // Global variables
 let balls; // All balls already dropped
-let ball; 
+// let ball; 
 let balls_left;
 let new_ball, new_ball_diam, adding_ball; // Ball currently being dropped	
 let boundaries, floor, l_wall, r_wall, ceiling; // screen boundaries
 let baddies;
+let inflate_sound, pop_sound, add_ball_sound, level_up_sound;
+
+function preload() {
+	inflate_sound = loadSound('assets/sounds/inflate.wav');
+	pop_sound = loadSound('assets/sounds/pop.wav');
+	add_ball_sound = loadSound('assets/sounds/addBall.wav');	
+	level_up_sound = loadSound('assets/sounds/levelUp.wav');
+}
 
 function setup() {
 	new Canvas(600, 400);
@@ -23,6 +31,7 @@ function setup() {
 	// Initialise balls
 	balls = new Group();
 	new_ball_diam = 1;
+	balls_left = 100;
 
 	// Initialise baddies
 	baddies = new Group();
@@ -56,6 +65,8 @@ function draw() {
 		if(new_ball.collides(baddies)) {
 			new_ball.remove();
 			adding_ball = false;
+			inflate_sound.stop();
+			pop_sound.play();
 		}
 	}
 
@@ -78,10 +89,13 @@ function mouseReleased() {
 function mousePressed() {
 	adding_ball = true;
 	new_ball = new Sprite(mouseX, mouseY, new_ball_diam, collider = 's');
+	inflate_sound.play();
 }
 
 function addBall() {
 	ball = new balls.Sprite(new_ball.x, new_ball.y, w = new_ball.w);
 	new_ball.remove();
 	adding_ball = false;
-}
+	inflate_sound.stop();
+	add_ball_sound.play();
+}S
