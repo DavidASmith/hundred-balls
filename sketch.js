@@ -1,5 +1,8 @@
+
+// Global variables
 let balls; // All balls already dropped
 let ball; 
+let balls_left;
 let new_ball, new_ball_diam, adding_ball; // Ball currently being dropped	
 let boundaries, floor, l_wall, r_wall, ceiling; // screen boundaries
 let baddies;
@@ -32,24 +35,43 @@ function draw() {
 	clear();
 	background('gray');
 	
+	// If we're currently adding a ball
 	if(adding_ball) {
+		// Ball follows mouse
 		new_ball.x = mouseX;
 		new_ball.y = mouseY;
+		// Ball size increases
 		new_ball.w = new_ball.w + 2
+		// Add the ball if it touches any other balls or boundaries
+		if(new_ball.collides(balls)) {
+			addBall();
+		}
+		if((new_ball.x + (new_ball.w / 2) > 600) || 
+		   (new_ball.x - (new_ball.w / 2) < 0) ||
+		   (new_ball.y + (new_ball.w / 2) > 400) ||
+		   (new_ball.y - (new_ball.w / 2) < 0)) {
+			addBall();
+		}
+		// Stop adding the ball if it touches a baddy
+		if(new_ball.collides(baddies)) {
+			new_ball.remove();
+			adding_ball = false;
+		}
 	}
 
+	// The baddies go for a random walk
 	baddy.bearing = baddy.bearing + random(-90, 90);
 	baddy.applyForce(random(0, 1));
 
+	// Apply gravity to balls
 	balls.applyForceScaled({ x: 0, y: 10});
-
 
 }
 
 function mouseReleased() {
-	ball = new balls.Sprite(new_ball.x, new_ball.y, w = new_ball.w);
-	new_ball.remove();
-	adding_ball = false;
+	if(adding_ball) {
+		addBall();
+	}
 }
 
 
@@ -58,3 +80,8 @@ function mousePressed() {
 	new_ball = new Sprite(mouseX, mouseY, new_ball_diam, collider = 's');
 }
 
+function addBall() {
+	ball = new balls.Sprite(new_ball.x, new_ball.y, w = new_ball.w);
+	new_ball.remove();
+	adding_ball = false;
+}
