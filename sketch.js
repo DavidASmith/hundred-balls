@@ -138,6 +138,9 @@ function addBall() {
 	inflate_sound.stop();
 	add_ball_sound.play();
 	balls_left --;
+	if(balls_area / screen_area > target) {
+		levelUp();
+	}
 }
 
 
@@ -180,3 +183,16 @@ function displayProgressBar() {
 	textAlign(CENTER);
 	text("Target", indentation + (width - 2 * indentation) * target, 18);
   }
+
+function levelUp() {
+	level ++;
+	balls.remove();
+	balls_area = 0;
+	if (level % 5 == 0) {
+		baddy = new baddies.Sprite(300, 200, 10, 10, collider = 'd');
+	}
+	target = min(0.75, target + 0.005);
+	baddie_force = baddie_force * 1.02;
+	level_up_sound.play();
+
+}
