@@ -40,10 +40,12 @@ function setup() {
 }
 
 function draw() {
-
+	
 	clear();
+	
 	background('gray');
 	
+
 	// If we're currently adding a ball
 	if(adding_ball) {
 		// Ball follows mouse
@@ -51,6 +53,7 @@ function draw() {
 		new_ball.y = mouseY;
 		// Ball size increases
 		new_ball.w = new_ball.w + 2
+		new_ball.draw();
 		// Add the ball if it touches any other balls or boundaries
 		if(new_ball.collides(balls)) {
 			addBall();
@@ -67,6 +70,7 @@ function draw() {
 			adding_ball = false;
 			inflate_sound.stop();
 			pop_sound.play();
+			balls_left --;
 		}
 	}
 
@@ -76,6 +80,10 @@ function draw() {
 
 	// Apply gravity to balls
 	balls.applyForceScaled({ x: 0, y: 10});
+
+	balls.draw();
+	displayLives();
+
 
 }
 
@@ -98,4 +106,15 @@ function addBall() {
 	adding_ball = false;
 	inflate_sound.stop();
 	add_ball_sound.play();
-}S
+	balls_left --;
+}
+
+
+function displayLives() {
+	fill('red');
+	textSize(32);
+	textAlign(RIGHT);
+	text(balls_left, width - 20, height - 20);
+	textSize(12);
+	text("Balls Left", width - 20, height - 50);
+  }
