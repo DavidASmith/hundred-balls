@@ -103,7 +103,10 @@ function draw() {
 	}
 
 	// The baddies go for a random walk
-	baddies.bearing = baddy.bearing + random(-90, 90);
+	for (my_baddy of baddies) {
+		my_baddy.bearing = my_baddy.bearing + random(-90, 90);
+	}
+	
 	baddies.applyForce(baddie_force);
 
 	// Apply gravity to balls
