@@ -7,6 +7,7 @@ let new_ball, new_ball_diam, adding_ball; // Ball currently being dropped
 let boundaries, floor, l_wall, r_wall, ceiling; // screen boundaries
 let baddies;
 let inflate_sound, pop_sound, add_ball_sound, level_up_sound;
+let level;
 
 function preload() {
 	inflate_sound = loadSound('assets/sounds/inflate.wav');
@@ -36,6 +37,8 @@ function setup() {
 	// Initialise baddies
 	baddies = new Group();
 	baddy = new baddies.Sprite(300, 200, 10, 10, collider = 'd');
+
+	level = 1;
 
 }
 
@@ -83,6 +86,7 @@ function draw() {
 
 	balls.draw();
 	displayLives();
+	displayLevel();
 
 
 }
@@ -117,4 +121,13 @@ function displayLives() {
 	text(balls_left, width - 20, height - 20);
 	textSize(12);
 	text("Balls Left", width - 20, height - 50);
+  }
+
+function displayLevel() {
+	fill('red');
+	textSize(32);
+	textAlign(LEFT);
+	text(level, 20, height - 20);
+	textSize(12);
+	text("Level", 20, height - 50);
   }
