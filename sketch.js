@@ -1,13 +1,13 @@
 let balls; // All balls already dropped
 let ball; 
 let new_ball, new_ball_diam, adding_ball; // Ball currently being dropped	
-let boundaries, floor, l_wall, r_wall, ceiling // screen boundaries
+let boundaries, floor, l_wall, r_wall, ceiling; // screen boundaries
+let baddies;
 
 function setup() {
 	new Canvas(600, 400);
 
 	// Setup world
-	world.gravity.y = 10;
 
 	// Define boundaries for game world
 	boundaries = new Group;
@@ -21,18 +21,29 @@ function setup() {
 	balls = new Group();
 	new_ball_diam = 1;
 
+	// Initialise baddies
+	baddies = new Group();
+	baddy = new baddies.Sprite(300, 200, 10, 10, collider = 'd');
+
 }
 
 function draw() {
- 
+
+	clear();
+	background('gray');
+	
 	if(adding_ball) {
 		new_ball.x = mouseX;
 		new_ball.y = mouseY;
 		new_ball.w = new_ball.w + 2
 	}
 
-	background('gray');
-	clear();
+	baddy.bearing = baddy.bearing + random(-90, 90);
+	baddy.applyForce(random(0, 1));
+
+	balls.applyForceScaled({ x: 0, y: 10});
+
+
 }
 
 function mouseReleased() {
@@ -44,6 +55,6 @@ function mouseReleased() {
 
 function mousePressed() {
 	adding_ball = true;
-	new_ball = new Sprite(mouseX, mouseY, new_ball_diam);
+	new_ball = new Sprite(mouseX, mouseY, new_ball_diam, collider = 's');
 }
 
