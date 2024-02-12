@@ -61,7 +61,7 @@ function setup() {
 	baddie_force = 0.1;
 	baddies = new Group();
 	baddies.color = baddie_colour;
-	baddy = new baddies.Sprite(300, 200, 10, 10, collider = 'd');
+	baddy = new baddies.Sprite(random(10, width - 10), random(10, height - 10), 10, 10, collider = 'd');
 
 	level = 1;
 
@@ -193,7 +193,7 @@ function levelUp() {
 	balls.remove();
 	balls_area = 0;
 	if (level % 5 == 0) {
-		baddy = new baddies.Sprite(300, 200, 10, 10, collider = 'd');
+		baddy = new baddies.Sprite(random(10, width - 10), random(10, height - 10), 10, 10, collider = 'd');
 	}
 	target = min(0.75, target + 0.005);
 	baddie_force = baddie_force * 1.02;
