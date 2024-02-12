@@ -58,6 +58,7 @@ function setup() {
 
 	// Initialise baddies
 	num_baddies = 1;
+	baddie_force = 0.1;
 	baddies = new Group();
 	baddies.color = baddie_colour;
 	baddy = new baddies.Sprite(300, 200, 10, 10, collider = 'd');
@@ -102,8 +103,8 @@ function draw() {
 	}
 
 	// The baddies go for a random walk
-	baddy.bearing = baddy.bearing + random(-90, 90);
-	baddy.applyForce(random(0, 1));
+	baddies.bearing = baddy.bearing + random(-90, 90);
+	baddies.applyForce(baddie_force);
 
 	// Apply gravity to balls
 	balls.applyForceScaled({ x: 0, y: 10});
