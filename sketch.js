@@ -37,6 +37,7 @@ function setup() {
 
 	// Define boundaries for game world
 	floor = new Sprite([[0, 0], [0, 400], [600, 400], [600, 0], [1, 0]]);
+	floor.color = background_colour;
 	floor.collider = 'static';
 
 	// Initialise balls
@@ -55,10 +56,8 @@ function setup() {
 function draw() {
 	
 	clear();
-	
 	background(background_colour);
 	
-
 	// If we're currently adding a ball
 	if(adding_ball) {
 		// Ball follows mouse
@@ -130,11 +129,15 @@ function setupNewGame() {
 	// Setup baddies
 	baddies.remove();
 	baddie_force = 0.1;
-	baddy = new baddies.Sprite(random(10, width - 10), random(10, height - 10), 10, 10, collider = 'd');
+	addBaddy();
 
 	// Start at the beginning
 	level = 1;
 
+}
+
+function addBaddy() {
+	baddy = new baddies.Sprite(random(10, width - 10), random(10, height - 10), 8, 'pentagon');
 }
 
 function mousePressed() {
@@ -210,7 +213,7 @@ function levelUp() {
 	balls.remove();
 	balls_area = 0;
 	if (level % 5 == 0) {
-		baddy = new baddies.Sprite(random(10, width - 10), random(10, height - 10), 10, 10, collider = 'd');
+		addBaddy();
 	}
 	target = min(0.75, target + 0.005);
 	baddie_force = baddie_force * 1.05;
