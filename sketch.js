@@ -42,6 +42,7 @@ function draw() {
 	baddy.applyForce(random(0, 1));
 
 	balls.applyForceScaled({ x: 0, y: 10});
+	//balls.applyForce({ x: 0, y: 10});
 
 
 }
