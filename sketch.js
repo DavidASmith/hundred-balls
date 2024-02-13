@@ -26,14 +26,15 @@ function setup() {
 	screen_area = width * height;
 
 	// Colors
-	baddie_colour = color(204, 51, 63);
-	ball_colour = color(0, 160, 176);
-	background_colour = color(106, 74, 60);
-	text_colour = color(237, 201, 81);
-	progress_colour = color(0, 160, 176);
-	adding_ball_colour = color(204, 51, 63);
-	target_colour = color(237, 201, 81);
-	progress_background_colour = color(235, 104, 65);
+	// https://coolors.co/palette/780000-c1121f-fdf0d5-003049-669bbc
+	baddie_colour = color(193, 18, 31); 
+	ball_colour = color(102, 155, 188); 
+	background_colour = color(0, 48, 73); 
+	text_colour = color(253, 240, 213); 
+	progress_colour = color(102, 155, 188); 
+	adding_ball_colour = color(102, 155, 188); 
+	target_colour = color(120, 0, 0); 
+	progress_background_colour = color(0, 48, 73); 
 
 	// Define boundaries for game world
 	floor = new Sprite([[0, 0], [0, 400], [600, 400], [600, 0], [1, 0]]);
@@ -70,9 +71,9 @@ function draw() {
 		if(new_ball.collides(balls)) {
 			addBall();
 		}
-		if((new_ball.x + (new_ball.w / 2) > 600) || 
+		if((new_ball.x + (new_ball.w / 2) > width) || 
 		   (new_ball.x - (new_ball.w / 2) < 0) ||
-		   (new_ball.y + (new_ball.w / 2) > 400) ||
+		   (new_ball.y + (new_ball.w / 2) > height) ||
 		   (new_ball.y - (new_ball.w / 2) < 0)) {
 			addBall();
 		}
@@ -202,10 +203,10 @@ function displayProgressBar() {
 	  fill(adding_ball_colour);
 	  rect(indentation + (width - 2 * indentation) * (balls_area/screen_area), indentation, (width - 2 * indentation) * ((PI * pow(new_ball.w / 2, 2))/screen_area), girth);
 	}
-	fill(text_colour);
-	textSize(10);
-	textAlign(CENTER);
-	text("Target", indentation + (width - 2 * indentation) * target, 18);
+	//fill(text_colour);
+	//textSize(10);
+	//textAlign(CENTER);
+	//text("Target", indentation + (width - 2 * indentation) * target, 18);
   }
 
 function levelUp() {
