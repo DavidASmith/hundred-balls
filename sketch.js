@@ -20,7 +20,7 @@ function preload() {
 }
 
 function setup() {
-	new Canvas(600, 400);
+	new Canvas(800, 800);
 
 	// Setup world
 	screen_area = width * height;
@@ -37,7 +37,7 @@ function setup() {
 	progress_background_colour = color(0, 48, 73); 
 
 	// Define boundaries for game world
-	floor = new Sprite([[0, 0], [0, 400], [600, 400], [600, 0], [1, 0]]);
+	floor = new Sprite([[0, 0], [0, height], [width, height], [width, 0], [1, 0]]);
 	floor.color = background_colour;
 	floor.collider = 'static';
 
@@ -65,7 +65,7 @@ function draw() {
 		new_ball.x = mouseX;
 		new_ball.y = mouseY;
 		// Ball size increases
-		new_ball.w = new_ball.w + 2
+		new_ball.w = new_ball.w + (width / 200);
 		new_ball.draw();
 		// Add the ball if it touches any other balls or boundaries
 		if(new_ball.collides(balls)) {
