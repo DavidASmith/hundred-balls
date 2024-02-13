@@ -3,7 +3,7 @@
 let balls; // All balls already dropped
 let balls_left; // How many balls we have left to play with
 let new_ball, new_ball_diam, adding_ball; // Ball currently being dropped	
-let boundaries, floor, l_wall, r_wall, ceiling; // screen boundaries
+let floor; // screen boundaries
 let baddies, num_baddies, baddie_force;
 // Sounds
 let inflate_sound, pop_sound, add_ball_sound, level_up_sound;
@@ -36,12 +36,8 @@ function setup() {
 	progress_background_colour = color(235, 104, 65);
 
 	// Define boundaries for game world
-	boundaries = new Group;
-
-	floor   = new boundaries.Sprite(x = 300, y = 400, w = 600, h = 10,  collider = 's');
-	l_wall  = new boundaries.Sprite(x = 0,   y = 200, w = 10,  h = 400, collider = 's');
-	r_wall  = new boundaries.Sprite(x = 600, y = 200, w = 10,  h = 400, collider = 's');
-	ceiling = new boundaries.Sprite(x = 300, y = 0,   w = 600,  h = 10, collider = 's');
+	floor = new Sprite([[0, 0], [0, 400], [600, 400], [600, 0], [1, 0]]);
+	floor.collider = 'static';
 
 	// Initialise balls
 	balls = new Group();
