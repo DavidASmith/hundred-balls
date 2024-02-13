@@ -23,14 +23,7 @@ function setup() {
 	new Canvas(600, 400);
 
 	// Setup world
-
-	// Intitialise game state
 	screen_area = width * height;
-	balls_left = 100;
-	game_over - false;
-	balls_area = 0;
-	target = 0.5;
-
 
 	// Colors
 	baddie_colour = color(204, 51, 63);
@@ -55,16 +48,12 @@ function setup() {
 	balls.color = ball_colour;
 	new_ball_diam = 1;
 
-
 	// Initialise baddies
-	num_baddies = 1;
-	baddie_force = 0.1;
 	baddies = new Group();
 	baddies.color = baddie_colour;
-	baddy = new baddies.Sprite(random(10, width - 10), random(10, height - 10), 10, 10, collider = 'd');
 
-	level = 1;
-
+	// Start new game
+	setupNewGame();
 }
 
 function draw() {
@@ -99,6 +88,9 @@ function draw() {
 			inflate_sound.stop();
 			pop_sound.play();
 			balls_left --;
+			if(balls_left < 1) {
+				game_over = true;
+			}
 		}
 	}
 
@@ -117,6 +109,10 @@ function draw() {
 	displayLevel();
 	displayProgressBar();
 
+	if(game_over) {
+		displayGameOver();
+	}
+
 
 }
 
@@ -126,12 +122,34 @@ function mouseReleased() {
 	}
 }
 
+function setupNewGame() {
+
+	// Setup balls
+	balls.remove();
+	balls_left = 100;
+	game_over = false;
+	balls_area = 0;
+	target = 0.5;
+
+	// Setup baddies
+	baddies.remove();
+	baddie_force = 0.1;
+	baddy = new baddies.Sprite(random(10, width - 10), random(10, height - 10), 10, 10, collider = 'd');
+
+	// Start at the beginning
+	level = 1;
+
+}
 
 function mousePressed() {
-	adding_ball = true;
-	new_ball = new Sprite(mouseX, mouseY, w = new_ball_diam, collider = 's');
-	new_ball.color = ball_colour;
-	inflate_sound.play();
+	if(!game_over) {
+		adding_ball = true;
+		new_ball = new Sprite(mouseX, mouseY, w = new_ball_diam, collider = 's');
+		new_ball.color = ball_colour;
+		inflate_sound.play();
+	} else {
+		setupNewGame();
+	}
 }
 
 function addBall() {
@@ -145,6 +163,9 @@ function addBall() {
 	if(balls_area / screen_area > target) {
 		levelUp();
 	}
+	if(balls_left < 1) {
+		game_over = true;
+	}
 }
 
 
@@ -154,7 +175,7 @@ function displayLives() {
 	textAlign(RIGHT);
 	text(balls_left, width - 20, height - 20);
 	textSize(12);
-	text("Balls Left", width - 20, height - 50);
+	text("Balls", width - 20, height - 50);
   }
 
 function displayLevel() {
@@ -196,7 +217,19 @@ function levelUp() {
 		baddy = new baddies.Sprite(random(10, width - 10), random(10, height - 10), 10, 10, collider = 'd');
 	}
 	target = min(0.75, target + 0.005);
-	baddie_force = baddie_force * 1.02;
+	baddie_force = baddie_force * 1.05;
 	level_up_sound.play();
 
 }
+
+function displayGameOver() {
+	//background(background_colour);
+	fill(text_colour);
+	textSize(32);
+	textAlign(CENTER);
+	text("Game over - all balls gone!", width/2, height/2 - 40);
+	text("You reached level " + level + ".", width/2, height/2);
+	textSize(32);
+	text("Click to try again.", width/2, height/2 + 40);
+
+  }
