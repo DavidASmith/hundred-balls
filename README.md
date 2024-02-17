@@ -4,7 +4,7 @@
 
 ## Play the game
 
-You can play the game in the browser at Github pages.
+You can play the game in the browser at [https://davidasmith.github.io/hundred-balls/](https://davidasmith.github.io/hundred-balls/).
 
 ## Development
 
