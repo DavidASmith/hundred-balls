@@ -142,6 +142,15 @@ function addBaddy() {
 }
 
 function mousePressed() {
+	startAddingBall();
+}
+
+function touchStarted() {
+	startAddingBall();
+	return false;
+}
+
+function startAddingBall() {
 	if(!game_over) {
 		adding_ball = true;
 		new_ball = new Sprite(mouseX, mouseY, w = new_ball_diam, collider = 's');
@@ -149,7 +158,7 @@ function mousePressed() {
 		inflate_sound.play();
 	} else {
 		setupNewGame();
-	}
+	}	
 }
 
 function addBall() {
